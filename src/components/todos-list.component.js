@@ -1,17 +1,6 @@
 import React, {Component} from 'react';
-import {  Link } from "react-router-dom";
 import axios from "axios";
-
-const Todo = props  => (           //component that responsible for output  single row
-    <tr>
-        <td className={props.todo.completed ? 'completed' : ''}>{props.todo.description}</td>
-        <td className={props.todo.completed ? 'completed' : ''}>{props.todo.responsible}</td>
-        <td className={props.todo.completed ? 'completed' : ''}>{props.todo.priority}</td>
-        <td>
-            <Link to={"/edit/"+ props.todo._id}>Edit</Link>
-        </td>
-    </tr>
-)
+import TodoRow from "./TodoRow"
 
 export default class  TodosList extends Component {
 
@@ -41,9 +30,10 @@ export default class  TodosList extends Component {
 
     todoList() {
         return this.state.todos.map(function(currentTodo, i) {
-            return <Todo todo={currentTodo} key={i}/>;
+            return <TodoRow todo={currentTodo} key={i}/>;
         });
     }
+
 
     render() {
         return (
