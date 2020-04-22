@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
-import axios from "axios";             // with axios we send http requests from frontend app (from form) to our server
+import axios from "axios";
+// with axios we send http requests from frontend app (from form) to our server
 
 export default class CreateTodo extends Component {
 
     constructor(props) {
         super(props);
-                                        // get access to state with our methods
+        // get access to state with our methods
         this.onChangeTodoDescription = this.onChangeTodoDescription.bind(this)
         this.onChangeTodoResponsible = this.onChangeTodoResponsible.bind(this)
         this.onChangeTodoPriority = this.onChangeTodoPriority.bind(this)
@@ -19,23 +20,25 @@ export default class CreateTodo extends Component {
         }
     }
 
-    onChangeTodoDescription (e) {            // update properties
+    onChangeTodoDescription(e) {            // update properties
         this.setState({
             description: e.target.value
         })
     }
-    onChangeTodoResponsible (e) {
+
+    onChangeTodoResponsible(e) {
         this.setState({
             responsible: e.target.value
         })
     }
-    onChangeTodoPriority (e) {
+
+    onChangeTodoPriority(e) {
         this.setState({
             priority: e.target.value
         })
     }
 
-    onSubmit (e) {
+    onSubmit(e) {
         e.preventDefault();
         console.log(`Todo description: ${this.state.description}`)
 
@@ -48,7 +51,10 @@ export default class CreateTodo extends Component {
             completed: this.state.completed
         }
         axios.post(' http://localhost:4000/todos/add', newTodo) // request to API on server
-            .then(res => console.log(res.data));
+            .then(res => {
+                console.log(res.data);
+                this.props.history.push('/');
+            });
 
 
         this.setState({         // reset props after submit form, clear state object
@@ -61,8 +67,8 @@ export default class CreateTodo extends Component {
 
     render() {
         return (
-            <div style={{marginTop:20}}>
-                <h3>Create a new todo</h3>
+            <div style={{marginTop: 20}}>
+                <h3>Create a new Todo</h3>
 
                 <form onSubmit={this.onSubmit}>
                     <div className="form-group">
@@ -117,10 +123,8 @@ export default class CreateTodo extends Component {
                         </div>
                     </div>
                     <div className="form-group">
-                        <input type="submit" value="Create Todo" className="btn btn-outline-primary" />
-
+                        <input  type="submit" value="Create Todo" className="btn btn-outline-primary" />
                     </div>
-
                 </form>
             </div>
         )

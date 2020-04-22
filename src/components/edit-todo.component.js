@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 
+
 export default class EditTodo extends Component {
     constructor(props) {
         super(props);
@@ -21,7 +22,7 @@ export default class EditTodo extends Component {
 
     componentDidMount() {
         // get request to server to retrieve  specific by id t0do from DB
-        axios.get('http://localhost:4000/todos/' + this.props.match.params.id)
+        axios.get(`http://localhost:4000/todos/${this.props.match.params.id}` )
             .then(response => {
                 this.setState({
                     description: response.data.description,
@@ -65,10 +66,12 @@ export default class EditTodo extends Component {
             priority: this.state.priority,
             completed:this.state.completed
         }
-        axios.post(' http://localhost:4000/todos/update/' + this.props.match.params.id, obj)
-            .then(res => console.log(res.data))
-        // return to default routes to the list of all todos
-        this.props.history.push('/');
+        axios.post(`http://localhost:4000/todos/update/${this.props.match.params.id}`, obj)
+            .then(res => {
+                console.log(res.data)
+                // return to default routes to the list of all todos
+                this.props.history.push('/');
+            });
     }
 
     render() {

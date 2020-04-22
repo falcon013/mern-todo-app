@@ -1,20 +1,11 @@
-import React, { Component } from 'react';
-import {  Link } from "react-router-dom";
-import axios from 'axios';
+import React, {Component} from 'react';
+import {Link} from "react-router-dom";
 
 class TodoRow extends Component {
 
-    constructor(props) {
-        super(props);
-        this.delete = this.delete.bind(this);
-    }
-    delete() {
-        axios.delete('http://localhost:4000/todos/'+ this.props.todo._id)
-            .then(console.log('Deleted todo'))
-            .catch(err => console.log(err))
-    }
-
     render() {
+        let onDeleteHandle = this.props.onDelete;
+
         return (
             <tr>
                 <td className={this.props.todo.completed ? 'completed' : ''}>
@@ -26,9 +17,9 @@ class TodoRow extends Component {
                 <td className={this.props.todo.completed ? 'completed' : ''}>
                     {this.props.todo.priority}
                 </td>
-                <td>
-                    <Link to={"/edit/"+ this.props.todo._id}>Edit</Link>
-                    <button className="btn btn-danger ml-5"  onClick={this.delete} >
+                <td className="buttons">
+                    <Link style={{marginRight: 7}} to={"/edit/" + this.props.todo._id}>Edit</Link>
+                    <button className="btn btn-danger btn-sm" onClick={() => onDeleteHandle(this.props.todo._id)}>
                         Delete
                     </button>
                 </td>
@@ -36,4 +27,5 @@ class TodoRow extends Component {
         );
     }
 }
+
 export default TodoRow;
